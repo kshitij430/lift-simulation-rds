@@ -1,0 +1,60 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+#form{
+    margin: 10px;
+}
+
+#submit{
+    cursor: pointer;
+}
+.floor{
+    position: relative;
+    height: 15vh;
+    display: flex;
+    margin-top: 100px;
+}
+#border{
+    border: 1px solid black;
+}
+#lift-simulate{
+    margin: 50px;
+}
+
+#up,#down{
+    width: 50px;
+    height: 30px;
+    margin: 25px 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+}
+#up{
+    background-color: green;
+}
+#down{
+    background-color: yellow;
+}
+#liftBox{
+    position: relative;
+    min-width: 100px;
+    min-height: 180px;
+    display: flex;
+    background-color:#0F52BA;
+}
+.left-door, .right-door{
+    width:50px;
+    height:180px;
+    background-color: brown;
+    border-right: 1px solid black;
+    transition: all 2.5s ease;
+}
+.right-door{
+    position: absolute;
+    top: 0;
+    right: 0;
+}

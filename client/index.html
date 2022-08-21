@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/css/main.css" />
+    <title>Lift Simulation</title>
+  </head>
+  <body>
+    <form id="form">
+      <label for="floor">No. of floors</label>
+      <input type="text" name="floor" id="floor" value="8" />
+      <label for="lift">No. of Lifts</label>
+      <input type="text" name="lift" id="lift" value="3" />
+      <button type="submit" id="submit">Submit</button>
+    </form>
+    <section id="lift-simulate"></section>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="./src/js/script.js"></script>
+  </body>
+</html>
