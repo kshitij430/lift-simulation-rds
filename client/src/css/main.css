@@ -58,3 +58,15 @@
     top: 0;
     right: 0;
 }
+ #new-connection{
+    color: red;
+    font-size: larger;
+    font-weight: 900;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+ }
+.hidden{
+    visibility: hidden;
+}

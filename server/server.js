@@ -10,12 +10,13 @@ const server = app.listen(process.env.PORT, process.env.IP, () => {
 });
 const io = socketio(server);
 io.on("connection", (sock) => {
-  console.log(`UsersConnected = ${io.engine.clientsCount}`);
+  const users = io.engine.clientsCount;
+  console.log(`${users} connected`);
+  io.emit("new-connection", users);
   //   listen to incoming messages
   sock.on("message", (text) => {
     io.emit("message", text);
   });
-
   sock.on("dom-update", (text) => {
     io.emit("dom-update", text);
   });
