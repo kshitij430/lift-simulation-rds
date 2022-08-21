@@ -5,10 +5,8 @@ const path = require("path");
 const app = express();
 require("dotenv").config({ path: path.join(__dirname, "..", "config.env") });
 app.use(express.static("../client"));
-const server = app.listen(process.env.PORT, process.env.IP, () => {
-  console.log(
-    `server started successfully on ${process.env.IP}:${process.env.PORT}`
-  );
+const server = app.listen(process.env.PORT, () => {
+  console.log(`server started successfully on ${process.env.PORT}`);
 });
 const io = socketio(server);
 io.on("connection", (sock) => {
