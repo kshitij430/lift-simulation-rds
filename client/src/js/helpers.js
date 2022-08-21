@@ -1,11 +1,11 @@
 import * as state from "./script.js";
 
-export const liftDoorOpening = function (leftLiftDoor, rightLiftDoor) {
+const liftDoorOpening = function (leftLiftDoor, rightLiftDoor) {
   leftLiftDoor.style.width = "0px";
   rightLiftDoor.style.width = "0px";
 };
 
-export const liftDoorClosing = function (leftLiftDoor, rightLiftDoor, chosenLift) {
+const liftDoorClosing = function (leftLiftDoor, rightLiftDoor, chosenLift) {
   leftLiftDoor.style.width = "50px";
   rightLiftDoor.style.width = "50px";
 
@@ -18,7 +18,7 @@ export const liftDoorClosing = function (leftLiftDoor, rightLiftDoor, chosenLift
   }, 1500);
 };
 
-export const moveLift = function (btn, chosenLift) {
+const moveLift = function (btn, chosenLift) {
   const floorNum = +btn;
   chosenLift.lift.style.top = `-${280 * (floorNum - 1) + floorNum}px`;
   chosenLift.lift.style.transition = `all ${2 * Math.abs(floorNum - chosenLift.floornum)}s ease-in-out`;
@@ -34,7 +34,7 @@ export const moveLift = function (btn, chosenLift) {
   }, 2000 * Math.abs(floorNum - chosenLift.floornum) + 2500);
 };
 
-export const generateHtml = function (nf, nl) {
+const generateHtml = function (nf, nl) {
   let html = "";
   let liftHtml = "";
   for (let i = 1; i <= nl; i++) {
@@ -60,7 +60,7 @@ export const generateHtml = function (nf, nl) {
   return html;
 };
 
-export const identifyFreeLift = function (btn) {
+const identifyFreeLift = function (btn) {
   const toFloorNum = +btn;
   let res = 1000;
   let chosenLift;
@@ -87,4 +87,44 @@ export const identifyFreeLift = function (btn) {
       moveLift(btn, chosenLift);
     }
   }
+};
+
+export const initialHTML = function (totalFloors, totalLifts) {
+  const html = generateHtml(totalFloors, totalLifts);
+  const liftSimulateSection = document.querySelector("#lift-simulate");
+  liftSimulateSection.innerHTML = html;
+  const upBtns = document.querySelectorAll("#up");
+  const downBtns = document.querySelectorAll("#down");
+  // INITIALIZE LIFTS
+  const lifts = document.querySelectorAll("#liftBox");
+  state.state.lifts = [];
+  lifts.forEach((lift) => {
+    state.state.lifts.push({
+      lift,
+      floornum: 0,
+      destFloorOnRoute: -1,
+      liftnum: +lift.dataset.liftnum,
+    });
+  });
+  // EVENT LISTENERS
+  state.sock.on("message", (text) => {
+    if (text?.upBtn) {
+      identifyFreeLift(text.upBtn);
+    }
+    if (text?.downBtn) {
+      identifyFreeLift(text.downBtn);
+    }
+  });
+  upBtns.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      state.sock.emit("message", { upBtn: this.dataset.floornum });
+      identifyFreeLift(this.dataset.floornum);
+    });
+  });
+  downBtns.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      state.sock.emit("message", { downBtn: this.dataset.floornum });
+      identifyFreeLift(this.dataset.floornum);
+    });
+  });
 };

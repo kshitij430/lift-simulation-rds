@@ -15,4 +15,8 @@ io.on("connection", (sock) => {
   sock.on("message", (text) => {
     io.emit("message", text);
   });
+
+  sock.on("dom-update", (text) => {
+    io.emit("dom-update", text);
+  });
 });
